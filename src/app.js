@@ -20,7 +20,18 @@ app.post("/sign-up", (req, res) =>{
     users.push({username, avatar})
     res.status(201).send("ok");
 })
+app.post("/tweets", (req, res) =>{
+    const {username, tweet} = req.body;
+    const existUser = users.find(u => u.username === username);
+    if(!username || !tweet){
+        return res.sendStatus(400);
+    }
+    
+    const {avatar} = existUser;
 
+    tweets.push({username, avatar, tweet});
+    res.status(201).send("ok");
+})
 
 
 app.listen(PORT, ()=>console.log("servidor está no ar")) //portas de 3000 até 5999
