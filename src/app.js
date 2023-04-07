@@ -38,5 +38,18 @@ app.post("/tweets", (req, res) =>{
     res.status(201).send("ok");
 })
 
+app.get("/tweets", (req, res) =>{
+    if(tweets.length >= 10){
+        const recentTweets = [];
+
+        for(let i = tweets.length-1; i >= tweets.length-10; i--){
+            recentTweets.push(tweets[i]);
+        }
+        return res.send(recentTweets);
+    }
+    
+    res.send(tweets);
+})
+
 
 app.listen(PORT, ()=>console.log("servidor está no ar")) //portas de 3000 até 5999
