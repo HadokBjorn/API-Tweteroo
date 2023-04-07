@@ -26,7 +26,9 @@ app.post("/tweets", (req, res) =>{
     if(!username || !tweet){
         return res.sendStatus(400);
     }
-    
+    if(!existUser){
+        return res.sendStatus(401);
+    }
     const {avatar} = existUser;
 
     tweets.push({username, avatar, tweet});
