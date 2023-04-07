@@ -29,6 +29,9 @@ app.post("/tweets", (req, res) =>{
     if(!existUser){
         return res.sendStatus(401);
     }
+    if(typeof username !== "string" && typeof tweet !== "string") {
+        res.send("Todos os campos são obrigatórios!");
+    }
     const {avatar} = existUser;
 
     tweets.push({username, avatar, tweet});
