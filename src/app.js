@@ -14,8 +14,8 @@ app.post("/sign-up", (req, res) =>{
     if(!username || !avatar){
         return res.sendStatus(400);
     }
-    if(typeof username !== "string" && typeof avatar !== "string") {
-        res.send("Todos os campos são obrigatórios!");
+    if(typeof username !== "string" || typeof avatar !== "string") {
+        res.status(400).send("Todos os campos são obrigatórios!");
     }
     users.push({username, avatar})
     res.status(201).send("ok");
@@ -29,8 +29,8 @@ app.post("/tweets", (req, res) =>{
     if(!existUser){
         return res.sendStatus(401);
     }
-    if(typeof username !== "string" && typeof tweet !== "string") {
-        res.send("Todos os campos são obrigatórios!");
+    if(typeof username !== "string" || typeof tweet !== "string") {
+        res.status(400).send("Todos os campos são obrigatórios!");
     }
     const {avatar} = existUser;
 
