@@ -11,7 +11,9 @@ app.use(express.json());
 
 app.post("/sign-up", (req, res) =>{
     const {username, avatar} = req.body;
-    
+    if(!username || !avatar){
+        return res.sendStatus(400);
+    }
     users.push({username, avatar})
     res.status(201).send("ok");
 })
