@@ -75,13 +75,15 @@ app.get("/tweets", (req, res) =>{
 app.get("/tweets/:USERNAME", (req, res) =>{
     const { USERNAME } = req.params;
 
+    //USERNAME && tweets.find(t => t.username === USERNAME)
+
     if(USERNAME){
         const tweetsFiltered = tweets.filter(
             (t) => t.username === USERNAME
         )
         return res.status(200).send(tweetsFiltered);
     }
-    res.sendStatus(400);
+    //res.status(404).send("Usuário não encontrado");
 })
 
 
