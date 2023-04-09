@@ -42,6 +42,7 @@ app.get("/tweets", (req, res) =>{
     const { USERNAME } = req.query;
     const { page } = req.query;
 
+    if(page < 1){ return res.status(400).send("Informe uma página válida!") }
 
     if(USERNAME){
         const tweetsFiltered = tweets.filter(
