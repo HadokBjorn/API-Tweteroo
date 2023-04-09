@@ -39,12 +39,24 @@ app.post("/tweets", (req, res) =>{
 })
 
 app.get("/tweets", (req, res) =>{
+    const { USERNAME } = req.query;
+    const { page } = req.query;
+
+
+    if(USERNAME){
+        const tweetsFiltered = tweets.filter(
+            (t) => t.username === USERNAME
+        )
+        return res.send(tweetsFiltered);
+    }
+
     if(tweets.length >= 10){
         const recentTweets = [];
 
         for(let i = tweets.length-1; i >= tweets.length-10; i--){
             recentTweets.push(tweets[i]);
         }
+
         return res.send(recentTweets);
     }
     
