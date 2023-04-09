@@ -9,6 +9,7 @@ const tweets = [];
 app.use(cors());
 app.use(express.json());
 
+
 app.post("/sign-up", (req, res) =>{
     const {username, avatar} = req.body;
     if(!username || !avatar){
@@ -41,9 +42,17 @@ app.post("/tweets", (req, res) =>{
 app.get("/tweets", (req, res) =>{
     const { USERNAME } = req.query;
     const { page } = req.query;
+    const numberPage = parseInt(page);
 
-    if(page < 1){ return res.status(400).send("Informe uma página válida!") }
+    if(numberPage < 1){ return res.status(400).send("Informe uma página válida!") }
 
+    if(numberPage >= 1){ 
+        const interator = numberPage * 10;
+        const initial = interator - 10;
+        const tweetPage =  tweets.reverse().slice((initial),interator)
+        return res.send(tweetPage);
+    }
+    
     if(USERNAME){
         const tweetsFiltered = tweets.filter(
             (t) => t.username === USERNAME
@@ -51,8 +60,9 @@ app.get("/tweets", (req, res) =>{
         return res.send(tweetsFiltered);
     }
 
-    if(tweets.length >= 10){
+    if(tweets.length >= 10 && !page){
         const recentTweets = [];
+        
 
         for(let i = tweets.length-1; i >= tweets.length-10; i--){
             recentTweets.push(tweets[i]);
