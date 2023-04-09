@@ -40,7 +40,6 @@ app.post("/tweets", (req, res) =>{
 })
 
 app.get("/tweets", (req, res) =>{
-    const { USERNAME } = req.query;
     const { page } = req.query;
     const numberPage = parseInt(page);
 
@@ -51,13 +50,6 @@ app.get("/tweets", (req, res) =>{
         const initial = interator - 10;
         const tweetPage =  tweets.reverse().slice((initial),interator)
         return res.send(tweetPage);
-    }
-    
-    if(USERNAME){
-        const tweetsFiltered = tweets.filter(
-            (t) => t.username === USERNAME
-        )
-        return res.send(tweetsFiltered);
     }
 
     if(tweets.length >= 10 && !page){
@@ -72,6 +64,19 @@ app.get("/tweets", (req, res) =>{
     }
     
     res.send(tweets);
+})
+
+
+app.get("/tweets/:USERNAME", (req, res) =>{
+    const { USERNAME } = req.params;
+
+    if(USERNAME){
+        const tweetsFiltered = tweets.filter(
+            (t) => t.username === USERNAME
+        )
+        return res.status(200).send(tweetsFiltered);
+    }
+    res.sendStatus(400);
 })
 
 
